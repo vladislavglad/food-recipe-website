@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Foodie's Paradise | Create</title>
+        <link rel="stylesheet" href="styles.css">
+        <script src="script.js"></script>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+
+    <body onload="requestGeo()">
+        <header class="main-header">
+            <nav class="nav main-nav">
+                <ul>
+                    <li><a href="index.html">HOME</a></li>
+                    <li><a href="create.html">CREATE A RECEPIE</a></li>
+                    <li><a href="store.html">STORE</a></li>
+                    <li><a href="contact.html">CONTACT US</a></li>
+                </ul>
+            </nav>
+            <h1 class="site-name site-name-large">Create Your New Recepie!</h1>
+        </header>
+
+        <section class="content-section container">
+
+            <div>
+                <p style="font-size: 2.0em">
+                    Food is the fuel for life, but it is also a pleasure of life. 
+                    Good food recepie is actually pretty simple, and not about 
+                    the mathematical number calculation of calories in, calories out. 
+                    But don’t worry. It’s much more simple and easy to create your perfect 
+                    recepie than it sounds. Go ahaed and press <strong>"NEW"</strong> to start creating
+                    and you will never be confused of what to eat again!
+                </p>
+            </div>
+
+            
+            <button id="newBtn" onclick="openRecepieForm()" class="btn btn-primary btn-large">NEW</button>
+            <button id="newBtn2" onclick="resetForm(); openRecepieForm();" class="btn btn-primary btn-large" style="display: none;">NEW</button>
+
+            <div id="divToChange" class="sub-section-header" style="visibility:hidden">Press "NEW" To Start Creating!</div>
+
+            <div id="cForm" style="display: none;">
+                <fieldset id="fieldset" class="content-section container" style="margin: 0 auto; width:600px;">
+                    <legend>Your Recepie:</legend>
+                    <br>
+                    Author's name: <input class="cForm" type="text" style="margin-top: 15px;" onchange="manage(this)"><br><br>
+                    Name of a dish: <input class="cForm" type="text" onchange="manage(this)"><br><br>
+                    List of ingridients: <br><textarea class="cForm" rows="5" cols="40" onchange="manage(this)"></textarea><br><br>
+
+                    What type of wine(s) pairs well with your dish: <br>
+                    (Hold down the Ctrl/Command button to select multiple.) <br><br>
+
+                    <select id="mult" multiple>
+                        <option>Dry White</option>
+                        <option>Sweet White</option>
+                        <option>Rich White</option>
+                        <option>Sparkling</option>
+                        <option>Ligth Red</option>
+                        <option>Medium Red</option>
+                        <option>Bold Red</option>
+                        <option>Dessert</option>
+                        <option>Other</option>
+                    </select><br><br>
+                    
+                    Minutes to cook: <input class="cForm" type="number" min="1" max="1440" value=0 placeholder="0" onchange="manage(this)"><br><br>
+
+                    How many servings: <input type="range" min="1" max="16" value="1" class="slider" id="myRange">
+                    <span id="sliderVal" style="margin-left: 15px;"></span>
+                    <script>
+                        var slider = document.getElementById("myRange");
+                        var output = document.getElementById("sliderVal");
+                        output.innerHTML = slider.value;
+                        
+                        slider.oninput = function() {
+                            output.innerHTML = this.value;
+                        }
+                    </script>
+
+                    <br><br>
+                    Step-by-step recepie: 
+                    <br><textarea class="cForm" id="textRec" rows="5" cols="40" onchange="manage(this)"></textarea><br>
+    
+                    <button id="submitBtn" 
+
+                        type="submit" 
+                        class="btn btn-primary btn-large" 
+                        disabled 
+                        onclick="submitMsg(); changeDiv();">SUBMIT
+                    </button>
+                </fieldset>
+            </div>
+        </section>
+        
+        <footer class="main-footer">
+            <div class="container main-footer-container">
+                <h3 class="site-name">Share Recepies On:</h3>
+                <ul class="nav footer-nav">
+                    <li>
+                        <a href="https://www.facebook.com" target="_blank">
+                            <div display = "flex" align-items = "center">
+                                <label id="label">Facebook: </label> 
+                                <img  src="Images/Facebook.png">
+                            </div>
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="https://www.twitter.com" target="_blank">
+                            <div display = "flex" align-items = "center">
+                                <label id="label">Twitter: </label>
+                                <img  src="Images/Twitter.png">
+                        </div>
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="https://www.youtube.com" target="_blank">
+                            <div display = "flex" align-items = "center">
+                                <label id="label">YouTube: </label>
+                                <img  src="Images/YouTube.png">
+                            </div>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </footer>
+    </body>
+</html>

@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Foodie's Paradise | Home</title>
+        <link rel="stylesheet" href="styles.css">
+        <script src="script.js"></script>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+
+    <body>
+        <header class="main-header">
+            <nav class="nav main-nav">
+                <ul>
+                    <li><a href="index.html">HOME</a></li>
+                    <li><a href="create.html">CREATE A RECEPIE</a></li>
+                    <li><a href="store.html">STORE</a></li>
+                    <li><a href="contact.html">CONTACT US</a></li>
+                </ul>
+            </nav>
+            <h1 class="site-name site-name-large">Foodie's Paradise</h1>
+        </header>
+
+        <section class="content-section container">
+            <div id="myModal" class="modal">
+                <div class="modal-content validation" style="margin: 0 auto; width:250px;">
+                    <span class="close" onclick="closeModal()">&times;</span>
+
+                    <div>E-mail:<input id="emailField" type="email" required></div>
+                    <div>Password:<input id="pswdField1" type="password" required></div>
+                    <div>Confirm Password:<input id="pswdField2" type="password" required></div><br>
+             
+                    <span><button type="submit" onclick="validate()" class="btn btn-primary">Register</button></span>
+                    <button onclick="closeModal()" class="btn btn-primary">Cancel</button>
+                </div>
+            </div>
+
+            <h3 class="section-header">Home Of Millions Delicious Recipes!</h3>
+
+            <video width="800" controls >
+                    <source src="Videos/vid1.mp4" type="video/mp4">
+                    Your browser does not support HTML5 video.
+            </video>
+
+            <p style="font-size: 1.5em">
+                Foodie’s Paradise, is intended to let you upload, save and share your favorite food recipes in one place. 
+                This website does not really target any specific group of users. It is, rather, for general audience, people 
+                who are interested in food, that is, all the people in the world, because food is life! We all have our favorite
+                food recipes that we truly like, why not save some wood, go paperless and finally store them all in one place 
+                instead of searching for that bulky, old fashioned notebook of yours? What are your waiting for?
+            </p>
+
+            <div style="align-items: center">
+                <button id="myBtn" onclick="openModal()" class="btn btn-primary btn-large">SIGN UP</button>
+                <!--<button><a href="create.html" style="text-decoration: none;">GET CREATIVE</a></button>-->
+            </div>
+        </section>
+
+        <footer class="main-footer">
+                <div class="container main-footer-container">
+                    <h3 class="site-name">Share Recepies On:</h3>
+                    <ul class="nav footer-nav">
+                        <li>
+                            <a href="https://www.facebook.com" target="_blank">
+                                <div display = "flex" align-items = "center">
+                                    <label id="label">Facebook: </label> 
+                                    <img  src="Images/Facebook.png">
+                                </div>
+                            </a>
+                        </li>
+    
+                        <li>
+                            <a href="https://www.twitter.com" target="_blank">
+                                <div display = "flex" align-items = "center">
+                                    <label id="label">Twitter: </label>
+                                    <img  src="Images/Twitter.png">
+                            </div>
+                            </a>
+                        </li>
+    
+                        <li>
+                            <a href="https://www.youtube.com" target="_blank">
+                                <div display = "flex" align-items = "center">
+                                    <label id="label">YouTube: </label>
+                                    <img  src="Images/YouTube.png">
+                                </div>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </footer>
+    </body>
+</html>

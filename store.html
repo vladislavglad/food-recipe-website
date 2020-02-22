@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Foodie's Paradise | Store</title>
+        <link rel="stylesheet" href="styles.css">
+        <script src="script.js"></script>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" charset="utf-8">
+        <script type='text/javascript' src='http://www.bing.com/api/maps/mapcontrol?callback=GetMap' async defer></script>
+
+        <script type='text/javascript'>
+            var map;
+            var directionsManager;
+
+            function GetMap() {
+                map = new Microsoft.Maps.Map('#myMap', {credentials: 'AlUCap2y9OIoyGnVpepFMpJ6ZxL2xebYcp0a1b0AjIEoLueQGiDmSqV1ndPiwb3M'});
+
+                map.setOptions({maxZoom: 13, minZoom: 10});
+
+                //Load the directions module.
+                Microsoft.Maps.loadModule('Microsoft.Maps.Directions', function () {
+
+                    //Create an instance of the directions manager.
+                    directionsManager = new Microsoft.Maps.Directions.DirectionsManager(map);
+
+                    //Create waypoints.
+                    var userLocWaypoint = new Microsoft.Maps.Directions.Waypoint({ 
+                        location: new Microsoft.Maps.Location(localStorage.getItem("userLatitude"), localStorage.getItem("userLongitude")) 
+                    });   
+                    directionsManager.addWaypoint(userLocWaypoint);
+
+                    var storeWaypoint = new Microsoft.Maps.Directions.Waypoint({ address: '2900 Bedford Ave, Brooklyn, 11210' });
+                    directionsManager.addWaypoint(storeWaypoint);
+
+                    //Add event handlers.
+                    Microsoft.Maps.Events.addHandler(directionsManager, 'directionsError', directionsError);
+                    Microsoft.Maps.Events.addHandler(directionsManager, 'directionsUpdated', directionsUpdated);
+
+                    //Calculate directions.
+                    directionsManager.calculateDirections();
+                });
+
+                function directionsUpdated(e) {
+                    //Get the current route index.
+                    var routeIdx = directionsManager.getRequestOptions().routeIndex;
+
+                    //Get the distance of the route.
+                    var distance = Math.round(e.routeSummary[routeIdx].distance * 100)/100;
+
+                    //Get the distance units used to calculate the route.
+                    var units = directionsManager.getRequestOptions().distanceUnit;
+                    var distanceUnits = '';
+
+                    if (units == Microsoft.Maps.Directions.DistanceUnit.km) {
+                        distanceUnits = 'km'
+                    } else {
+                        //Must be in miles
+                        distanceUnits = 'miles'
+                    }
+
+                    //Time is in seconds, convert to minutes.
+                    var time = Math.round(e.routeSummary[routeIdx].timeWithTraffic / 60);
+
+                    document.getElementById('routeInfoPanel').innerHTML = 'Distance: ' + distance + ' ' + distanceUnits + '<br/>Time with Traffic: ' + time + ' minutes';
+                }
+
+                function directionsError(e) {
+                    alert('Error: ' + e.message + '\r\nResponse Code: ' + e.responseCode)
+                }
+            }
+        </script>
+    </head>
+
+    <body onload="requestGeo()">
+        <header class="main-header">
+            <nav class="nav main-nav">
+                <ul>
+                    <li><a href="index.html">HOME</a></li>
+                    <li><a href="create.html">CREATE A RECEPIE</a></li>
+                    <li><a href="store.html">STORE</a></li>
+                    <li><a href="contact.html">CONTACT US</a></li>
+                </ul>
+            </nav>
+            <h1 class="site-name site-name-large">This Is Our Store Page!</h1>
+        </header>
+
+        <section class="content-section container">
+
+            <h1 class="section-header">Drag And Drop A Book You would like to Purchase</h1>
+
+            <div style="display:flex; justify-content:space-around">
+                <div class="tooltip"> 
+                    <image id="drag1" class="shop-item" src="Images/cover1.jpg" draggable="true" ondragstart="drag(event)"> 
+                    <span class="tooltiptext">Italian Recipes</span>
+                </div>
+
+                <div class="tooltip"> 
+                    <image id="drag2" class="shop-item" src="Images/cover2.jpg" draggable="true" ondragstart="drag(event)"> 
+                    <span class="tooltiptext">Home Cooking</span>
+                </div>
+
+                <div class="tooltip"> 
+                    <image id="drag3" class="shop-item" src="Images/cover3.jpeg" draggable="true" ondragstart="drag(event)"> 
+                    <span class="tooltiptext">West Cook Book</span>
+                </div>
+
+                <div class="tooltip"> 
+                    <image id="drag4" class="shop-item" src="Images/cover4.jpg" draggable="true" ondragstart="drag(event)"> 
+                    <span class="tooltiptext">The Flavor Bible</span>
+                </div>
+            </div>
+
+            <br><div id="shopingCart" ondrop="drop(event)" ondragover="allowDrop(event)"></div><br>
+
+            <button onclick="openMod()" class="btn btn-primary btn-large">CHECK OUT</button>
+
+            <div id="myMod" class="modal">
+                <div class="modal-content" style="margin: 0 auto; width:800px;">
+                    <span class="close" onclick="closeMod()">&times;</span>
+                    
+                    <h3>Please Provide Us With Your Contact Infrormation, Address And Creadit Card Number.</h3>
+                    Full Name:<input id="customerName" type="text" onchange="ssName()"><br>
+                    Home Address:<input id="customerHomeAddress" type="text" onchange="toUpper(); ssAddress();"><br>
+                    Card Number:
+                    <span class='credit-fields'>
+                        <input type="text"  id="txt1" maxlength="4" onkeyup="moveCursor('txt1','txt2')">
+                        <input type="text"  id="txt2" maxlength="4" onkeyup="moveCursor('txt2','txt3')">
+                        <input type="text"  id="txt3" maxlength="4" onkeyup="moveCursor('txt3','txt4')">
+                        <input type="text"  id="txt4" maxlength="4" onchange="ss4Digit()">
+                    </span>
+                    <br>Prefered delivery date: <input type="date" id="deliveryDate" min="2019-01-01"><br><br>
+
+                    <div><button type="button" onclick="generateReceipt();" class="btn btn-primary">PLACE YOUR ORDER NOW</button></div>
+
+                    <span><h1>-OR-</h1></span> 
+
+                    <span><button type="submit" onclick="showMap()" class="btn btn-primary">PAY & PICKUP AT OUR STORE</button></span>
+    
+                    <div id="receiptForm" style="display:none;">
+                       
+                        <br><div><h3>Thanks! Here Is Your Receipt:</h3></div>
+                        <table>
+                            <tr>
+                                <th>Full Name</th>
+                                <th>Home Address</th> 
+                                <th>Credit Card #</th>
+                                <th>Order #</th>
+                            </tr>
+                            <tr>
+                                <td id="nr"></td>
+                                <td id="har"></td>
+                                <td id="ccr"></td>
+                                <td>SPECIAL123</td>
+                            </tr>
+                        </table>
+                    </div><br><br>
+    
+                    <div id="myMap" hidden></div>
+                    <div id="routeInfoPanel" hidden></div>
+                    
+                    <button style="float: right;" onclick="closeMod()" class="btn btn-primary">Close</button> 
+                    <br><br>
+                </div>
+            </div>
+
+            </div>
+        </section>
+
+        <footer class="main-footer">
+                <div class="container main-footer-container">
+                    <h3 class="site-name">Share Recepies On:</h3>
+                    <ul class="nav footer-nav">
+                        <li>
+                            <a href="https://www.facebook.com" target="_blank">
+                                <div display = "flex" align-items = "center">
+                                    <label id="label">Facebook: </label> 
+                                    <img  src="Images/Facebook.png">
+                                </div>
+                            </a>
+                        </li>
+    
+                        <li>
+                            <a href="https://www.twitter.com" target="_blank">
+                                <div display = "flex" align-items = "center">
+                                    <label id="label">Twitter: </label>
+                                    <img  src="Images/Twitter.png">
+                            </div>
+                            </a>
+                        </li>
+    
+                        <li>
+                            <a href="https://www.youtube.com" target="_blank">
+                                <div display = "flex" align-items = "center">
+                                    <label id="label">YouTube: </label>
+                                    <img  src="Images/YouTube.png">
+                                </div>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </footer>
+    </body>
+</html>

@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Foodie's Paradise | Contact Us</title>
+        <link rel="stylesheet" href="styles.css">
+        <script src="script.js"></script>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+
+    <body>
+        <header class="main-header">
+            <nav class="nav main-nav">
+                <ul>
+                    <li><a href="index.html">HOME</a></li>
+                    <li><a href="create.html">CREATE A RECEPIE</a></li>
+                    <li><a href="store.html">STORE</a></li>
+                    <li><a href="contact.html">CONTACT US</a></li>
+                </ul>
+            </nav>
+            <h1 class="site-name site-name-large">Contact Page</h1>
+        </header>
+
+        <section class="content-section container">
+ 
+            <h1 class="section-header">Any Questions, Comments, Concerns?</h1>
+            <h2 class="sub-section-header">Please Fill Out the Form Below.</h2>
+
+            <form style="margin: 0 auto; width: 350px;" action="thankyou.html">
+                Your Name:<input type="text" required ><br>
+                Your E-mail:<input type="email" name="mail" required><br>
+                Your Phone (optional):<input type="tel"><br>
+                Subject:
+                <select default="choose one" required>
+                    <option value="" selected disabled hidden>Choose one</option>
+                    <option value="gq">General questions</option>
+                    <option value="c">Comments</option>
+                    <option value="rb">Report bugs</option>
+                    <option value="si">Suggest improvements</option>
+                    <option value="o">Other</option>
+                </select>
+                <br>Message:<br>
+                <textarea id="feedback" rows="5" cols="40" maxlength="250" onkeypress="maxLengthReached();" required></textarea><br>
+                <button type="submit" class="btn btn-primary btn-large">SUBMIT</button>
+            </form>
+        </section>
+
+        <footer class="main-footer">
+                <div class="container main-footer-container">
+                    <h3 class="site-name">Share Recepies On:</h3>
+                    <ul class="nav footer-nav">
+                        <li>
+                            <a href="https://www.facebook.com" target="_blank">
+                                <div display = "flex" align-items = "center">
+                                    <label id="label">Facebook: </label> 
+                                    <img  src="Images/Facebook.png">
+                                </div>
+                            </a>
+                        </li>
+    
+                        <li>
+                            <a href="https://www.twitter.com" target="_blank">
+                                <div display = "flex" align-items = "center">
+                                    <label id="label">Twitter: </label>
+                                    <img  src="Images/Twitter.png">
+                            </div>
+                            </a>
+                        </li>
+    
+                        <li>
+                            <a href="https://www.youtube.com" target="_blank">
+                                <div display = "flex" align-items = "center">
+                                    <label id="label">YouTube: </label>
+                                    <img  src="Images/YouTube.png">
+                                </div>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </footer>
+    </body>
+</html>
